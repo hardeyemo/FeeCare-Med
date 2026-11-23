@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ArrowLeft, Check, Clock3, X } from "lucide-react";
+import { Check, Clock3, X } from "lucide-react";
 import { CONSULTATION_FEE_NGN } from "../../../lib/consultation";
+import { buttonStyles } from "../../../lib/button-styles";
 
 type PaymentState = "checking" | "paid" | "unpaid" | "error";
 
@@ -43,7 +44,7 @@ export default function PaymentCallbackPage() {
         <span className={`mx-auto grid size-16 place-items-center rounded-full ${state === "paid" ? "bg-teal-50 text-teal-700" : "bg-blue-50 text-blue-700"}`}>{content.icon}</span>
         <h1 className="mt-6 font-serif text-3xl sm:text-4xl">{content.title}</h1>
         <p className="mt-4 leading-7 text-slate-600">{content.message}</p>
-        <Link href="/#home" className="mt-8 inline-flex items-center gap-2 rounded-lg bg-[#102A43] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#163A5C]"><ArrowLeft className="size-4" /> Back to FeeCare</Link>
+        <Link href="/#home" className={`${buttonStyles.dark} mt-8`}>Back to FeeCare</Link>
       </section>
     </main>
   );

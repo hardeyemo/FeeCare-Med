@@ -4,6 +4,7 @@ import { useId, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { CalendarCheck, Minus, Plus } from "lucide-react";
+import { buttonStyles } from "./lib/button-styles";
 
 export type Faq = {
   id: string;
@@ -109,7 +110,7 @@ export function FaqSection({ faqs = DEFAULT_FAQS, bookingHref = "/#appointment" 
           </p>
           <Link
             href={href()}
-            className="group mt-9 inline-flex items-center gap-3 rounded-lg bg-[#2563EB] px-7 py-4 font-medium text-white transition duration-300 hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2563EB]"
+            className={`${buttonStyles.primary} group mt-9 px-7 py-4`}
           >
             <CalendarCheck className="size-5 transition-transform duration-300 group-hover:-rotate-6" aria-hidden />
             Request an appointment
@@ -140,7 +141,7 @@ export function FaqSection({ faqs = DEFAULT_FAQS, bookingHref = "/#appointment" 
                     aria-expanded={open}
                     aria-controls={panelId}
                     onClick={() => setOpenId(open ? null : faq.id)}
-                    className="flex w-full items-center justify-between gap-6 rounded-2xl px-6 py-5 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2563EB] sm:px-8 sm:py-6"
+                    className={buttonStyles.accordion}
                   >
                     <span className="font-serif text-2xl leading-snug text-[#102A43] sm:text-[1.7rem]">
                       {faq.question}

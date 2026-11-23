@@ -26,7 +26,17 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Review the appointment details and try again." }, { status: 400 });
   }
 
-  const origin = process.env.SITE_URL || new URL(request.url).origin;
+  let origin: string;
+  try {
+    const configuredSiteUrl = process.env.SITE_URL?.trim();
+    const siteUrl = new URL(configuredSiteUrl || new URL(request.url).origin);
+    if (siteUrl.protocol !== "https:" && siteUrl.hostname !== "localhost" && siteUrl.hostname !== "127.0.0.1") {
+      return NextResponse.json({ error: "Payment site URL must use HTTPS." }, { status: 503 });
+    }
+    origin = siteUrl.origin;
+  } catch {
+    return NextResponse.json({ error: "Payment site URL is not configured correctly." }, { status: 503 });
+  }
   const reference = `feecare_${crypto.randomUUID()}`;
 
   try {
@@ -37,7 +47,7 @@ export async function POST(request: Request) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email,
+        email: email.trim(),
         amount: String(CONSULTATION_FEE_NGN * 100),
         currency: "NGN",
         reference,
@@ -53,11 +63,12 @@ export async function POST(request: Request) {
         },
       }),
       cache: "no-store",
+      signal: AbortSignal.timeout(15_000),
     });
-    const result = await paystackResponse.json();
+    const result = await paystackResponse.json().catch(() => null);
 
-    if (!paystackResponse.ok || !result.status || !result.data?.authorization_url) {
-      console.error("Paystack initialization failed", result.message);
+    if (!paystackResponse.ok || !result?.status || typeof result.data?.authorization_url !== "string") {
+      console.error("Paystack initialization failed", result?.message || "Invalid response");
       return NextResponse.json({ error: "Could not start payment. Please try again." }, { status: 502 });
     }
 
