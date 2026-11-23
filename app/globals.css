@@ -1,0 +1,73 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  scroll-behavior: smooth;
+  --font-serif: Georgia, "Times New Roman", serif;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+  color: #1e293b;
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: #bfdbfe;
+  color: #102a43;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@keyframes feecare-float {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(0, -16px, 0) rotate(2deg); }
+}
+
+@keyframes feecare-drift {
+  0%, 100% { transform: translate3d(-8px, 8px, 0) scale(1); }
+  50% { transform: translate3d(18px, -18px, 0) scale(1.08); }
+}
+
+@keyframes feecare-glow {
+  0%, 100% { box-shadow: 0 8px 24px rgba(37, 99, 235, 0.24); }
+  50% { box-shadow: 0 14px 42px rgba(13, 148, 136, 0.42); }
+}
+
+@keyframes feecare-zoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.09); }
+}
+
+.animate-feecare-float { animation: feecare-float 5s ease-in-out infinite; }
+.animate-feecare-float-delayed { animation: feecare-float 6s ease-in-out 1s infinite; }
+.animate-feecare-drift { animation: feecare-drift 9s ease-in-out infinite; }
+.animate-feecare-glow { animation: feecare-glow 2.4s ease-in-out infinite; }
+.animate-feecare-image { animation: feecare-zoom 18s ease-in-out infinite alternate; }
+
+@media (max-width: 767px) {
+  .animate-feecare-float { animation-duration: 3.8s; }
+  .animate-feecare-float-delayed { animation-duration: 4.2s; }
+  .animate-feecare-drift { animation-duration: 6.5s; }
+  .animate-feecare-glow { animation-duration: 1.8s; }
+  .animate-feecare-image { animation-duration: 12s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-feecare-float,
+  .animate-feecare-float-delayed,
+  .animate-feecare-drift,
+  .animate-feecare-glow,
+  .animate-feecare-image {
+    animation: none !important;
+  }
+}

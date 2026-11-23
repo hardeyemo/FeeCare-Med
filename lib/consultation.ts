@@ -1,0 +1,1 @@
+export const CONSULTATION_FEE_NGN = 15_000;
